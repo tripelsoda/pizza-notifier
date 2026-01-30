@@ -9,6 +9,7 @@ from client import Client
 from spike_detector import spike_signature, spike_summary_lines
 from renderer import render_simple_spike_card
 from pretty_print import pretty_spike_text
+from pretty_print import pretty_spike_text_telegram_html
 
 
 
@@ -29,7 +30,6 @@ def main() -> None:
             if sig is not None and sig != last_sig:
                 last_sig = sig
                 print(pretty_spike_text(payload, client.fmt_dt))
-                from pretty_print import pretty_spike_text_telegram_html
 
                 text = pretty_spike_text_telegram_html(payload, client.fmt_dt)
                 send_message(tg, text, parse_mode="HTML")
