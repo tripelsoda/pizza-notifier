@@ -9,20 +9,32 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+
+      - name: Cache last spike signature
+        uses: actions/cache@v4
+        with:
+          path: last_sig.txt
+          key: pizzint-last-sig
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install requests tzdata
+          pip install requests tzdata pillow
 
       - name: Run
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python gha_runner.py
+        run: |
+          echo "Starting run at $(date -u)"
+          python gha_runner.py
+          echo "Finished run at $(date -u)"
