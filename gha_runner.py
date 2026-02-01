@@ -3,7 +3,7 @@ import time
 
 from config import load_config
 from client import Client
-from spike_detector import spike_signature
+from spike_detector import spike_signature_over_threshold
 from telegram_notifier import load_telegram_config, send_message, send_photo
 from renderer import render_simple_spike_card
 from pretty_print import pretty_spike_text_telegram_html
