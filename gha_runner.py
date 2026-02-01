@@ -39,7 +39,7 @@ def main():
     for i in range(5):
         try:
             payload = client.fetch_dashboard(nocache=cfg.nocache)
-            sig = spike_signature(payload)
+            sig = spike_signature_over_threshold(payload, min_pct=300)
 
             if sig is not None and sig != last_sig:
                 last_sig = sig
